@@ -1,0 +1,1 @@
+<?phprequire "../lib/connect.php";$sel="select * from nav";$res=$mysqli->query($sel)->fetch_all(MYSQLI_ASSOC);require "../view/admin/navselect.html";?>

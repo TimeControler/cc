@@ -1,0 +1,64 @@
+<link rel="stylesheet" type="text/css" href="../static/index/css/Knowledgement_neirong.css"/>
+
+		
+		<!-- 图片上 -->
+		<div class="tupian">
+			<img src="../pet/top.jpg" >
+		</div>
+		
+		
+		<!-- 标题1 -->
+		<div class="biaoti1">
+			<span class="us1">养护知识</span>
+			<span class="us2">Knowledgement</span>
+		</div>
+		
+		<h2 class="title"><?php echo $know['ntitle'] ?></h2>
+		<h6 class="title_time">发布日期： <?php echo $know['update_time'] ?></h6>
+		
+		
+		<ul class="title_neirong">
+			<?php echo $know['content'] ?>
+		</ul>
+		
+		<div class="fenye">
+			<div class="shang">
+				<?php if($pre){ ?>
+					<a href="news.php?nid=<?php echo $preID ?>">
+						<span>上一篇</span>
+						<span><?php echo $preTitle ?></span>
+					</a>
+				<?php }else{ ?>
+					<a href="javascript:;">
+						<span>上一篇</span>
+						<span>没有了</span>
+					</a>
+				<?php } ?>
+
+			</div>
+			<div class="xia">
+				<?php if($next){ ?>
+					<a href="news.php?nid=<?php echo $nextID ?>">
+						<span><?php echo $nextTitle ?></span>
+						<span>下一篇</span>
+					</a>
+				<?php }else{ ?>
+					<a href="javascript:;">
+						<span>没有了</span>
+						<span>下一篇</span>
+					</a>
+				<?php } ?>
+
+			</div>
+		</div>
+		
+		<div class="fanhui">
+			<a href="navigator.php?page_id=23">返回列表</a>
+		</div>
+		
+		
+		<!-- 图片下 -->
+		<div class="tupian">
+			<img src="../static/index/img/20.jpg" >
+		</div>
+

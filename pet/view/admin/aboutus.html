@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+</head>
+<body>
+<form action="" class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">公司简介</label>
+        <div class="layui-input-block">
+            <textarea id="textArea" style="display: none;" name="content" ></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['form','jquery','layedit','layer'],function () {
+        var {form,$,layedit,layer}=layui;
+        var index=layedit.build('textArea');
+        $.get('aboutus1.php',{id:1},function (res) {
+            let data=JSON.parse(res);
+            layedit.setContent(index,data.content);
+        });
+        form.on('submit(formDemo)',function (data) {
+            data.field.content=layedit.getContent(index);
+            $.post('aboutus1.php',data.field,function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.msg(data.msg,{icon:1});
+                }else{
+                    layer.msg(data.msg,{icon:2});
+                }
+            });
+            return false;
+        })
+    })
+</script>

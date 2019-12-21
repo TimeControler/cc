@@ -1,0 +1,90 @@
+@import url("public.css");
+
+
+.tupian{
+	width: 1024px;
+	height: 350px;
+	margin: 20px auto 0px;
+	background: red;
+}
+.tupian img{
+	width: 100%;
+	height: 100%;
+}
+
+
+
+.tishiyu{
+	width: 130px;
+	height: 24px;
+	font-size: 12px;
+	background: #d64a49;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 24px;
+	margin-left: 124px;
+	margin-top: 5px;
+	display: none;
+	opacity: 0;
+}
+.biaodan_kuang{
+	width: 1024px;
+	height: auto;
+	margin: 30px auto 0;
+}
+.biaodan{
+	width: 50%;
+	height: auto;
+	margin: 0 auto;
+}
+.biaodan_list{
+	width: 100%;
+	height: auto;
+}
+.biaodan_list_li{
+	width: auto;
+	height: auto;
+	margin-bottom: 15px;
+}
+.biaodan_list_li label{
+	display: inline-block;
+	width: 120px;
+	height: 24px;
+	font-size: 14px;
+	color: #292929;
+}
+.biaodan_list_li select{
+	/* margin-left: 50px; */
+	height: 24px;
+	width: 84px;
+	border-radius: 5px;
+	box-shadow: inset 1px 1px 2px #a9a9a9;
+}
+#name{
+	width: 258px;
+	height: 24px;
+	border-radius: 5px;
+	box-shadow: inset 1px 1px 2px #a9a9a9;
+}
+.biaodan_list_li textarea{
+	width: 258px;
+	max-width: 380px;
+	text-wrap: wrap;
+	overflow-x: hidden;
+}
+.biaodan_list_li img{
+	display: inline-block;
+}
+#tijiao{
+	width: 98px;
+	height: 28px;
+	border: #333333 1px solid;
+	background: #333333;
+	color: #FFFFFF;
+}
+
+
+
+
+
+

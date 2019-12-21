@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .box{
+            width: 100%;
+            height: auto;
+            margin: 30px auto 0;
+        }
+        h1{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .layui-btn-sm i{
+            font-size: 24px !important;
+        }
+        #Form{
+            margin-top: 30px;
+            padding-right: 30px;
+            display: none;
+            height: auto;
+        }
+        #imgurl{
+            width: 200px;
+        }
+        tbody tr{
+            height: 100px;
+        }
+        .layui-table-cell{
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="" id="Form">
+    <input type="hidden" name="bid" >
+    <div class="layui-form-item">
+        <label class="layui-form-label">轮播图</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="hidden" name="bthumb" value="">
+                <button type="button" class="layui-btn" id="test1">图片上传</button>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <img id="imgurl" src="" alt="">
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="number" name="bsort" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+        </div>
+    </div>
+</form>
+
+<div class="box">
+    <table id="demo" lay-filter="test"></table>
+    <script type="text/html" id="box">
+        <button type="button" id="btn1" class="layui-btn layui-btn-sm" onclick="edits({{d.bid}})">
+            <i style="font-size: 20px;" class="layui-icon layui-icon-edit"></i>
+        </button>
+        <button type="button" id="btn2" class="layui-btn layui-btn-sm layui-btn-danger" onclick="del({{d.bid}})">
+            <i class="layui-icon layui-icon-delete"></i>
+        </button>
+    </script>
+</div>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    var layer,$,table;
+    var index,index1;
+    layui.use(['table','jquery','layer','form','upload'], function(){
+        table = layui.table;
+        $=layui.jquery;
+        layer=layui.layer;
+        var form=layui.form;
+        var upload=layui.upload;
+
+        // 缩略图
+        upload.render({
+            elem: '#test1'
+            ,url: 'upload.php'
+            ,size:500
+            ,done: function(res){
+                if(res.code==200){
+                    layer.msg(res.msg,{icon:1});
+                    $('input[name="bthumb"]').val(res.data);
+                    $("#imgurl").attr('src','../'+res.data);
+                }else{
+                    layer.msg(res.msg,{icon:2});
+                }
+            }
+        });
+
+        // 给表格获取数据
+        table.render({
+            elem: '#demo'
+            ,url: 'banner.php?type=querys' //数据接口
+            ,page: true //开启分页
+            ,limit:5
+            ,limits:[5,10,20,25,30]
+            ,cols: [[ //表头
+                {field: 'bid', title: 'ID', sort: true}
+                ,{field: 'bthumb', title: '轮播图',templet: function (d) {
+                        return `<img src="..${d.bthumb}">`
+                    }}
+                ,{field: 'bsort', title: '排序'}
+                ,{field: '', title: '操作',templet:"#box"}
+            ]]
+        });
+
+        form.on('submit(formDemo)',function (data) {
+            console.log(data.field);
+            $.post('banner.php?type=updates',data.field,function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.close(index);
+                    layer.msg(data.msg);
+                    table.reload('demo');
+                }else{
+                    layer.msg(data.msg)
+                }
+            })
+            return false;
+        })
+
+
+    });
+
+    function del(bid) {
+        index1=layer.confirm('您确定要删除么？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.get('banner.php?type=deletes',{bid:bid},function (res) {
+                let data=JSON.parse(res)
+                if(data.code==200){
+                    layer.close(index1)
+                    table.reload('demo');
+                    layer.msg("删除成功",{icon:1});
+                }else{
+                    layer.msg(data.msg);
+                }
+            })
+        }, function(){
+            layer.close(index1);
+            // layer.msg("删除失败",{icon:2});
+        });
+
+    }
+
+
+
+
+    // 给页面加弹出层
+    function edits(bid) {
+        index=layer.open({
+            type: 1,
+            title:"修改",
+            skin: 'layui-layer-rim', //加上边框
+            area: ['420px', 'auto'], //宽高
+            content: $("#Form")
+        })
+
+        $.get('banner.php?type=querysone',{bid:bid},function (res) {
+            let data=JSON.parse(res);
+            if(data.code==200){
+                $("input[name='bthumb']").val(data.data.bthumb);
+                $("input[name='bsort']").val(data.data.bsort);
+                $("input[name='bid']").val(data.data.bid);
+                $("#imgurl").attr('src','../'+data.data.bthumb);
+            }else{
+                layer.msg(data.msg);
+            }
+        })
+    }
+</script>

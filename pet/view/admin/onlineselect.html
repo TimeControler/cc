@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .box{
+            width: 100%;
+            height: auto;
+            margin: 30px auto 0;
+        }
+        h1{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <table id="demo" lay-filter="test"></table>
+</div>
+</body>
+</html>
+<script type="text/html" id="sex">
+    {{# if(d.sex==0){ }}
+    男
+    {{# }else{ }}
+    女
+    {{# } }}
+</script>
+<script src="../static/layui/layui.js"></script>
+<script>
+    var layer,$,table;
+    var index,index1;
+    layui.use(['table','jquery','layer','form','upload'], function(){
+        table = layui.table;
+        $=layui.jquery;
+        layer=layui.layer;
+        // 给表格获取数据
+        table.render({
+            elem: '#demo'
+            ,url: 'online.php' //数据接口
+            ,page: true //开启分页
+            ,limit:5
+            ,limits:[5,10,20,25,30]
+            ,cols: [[ //表头
+                {field: 'oid', title: 'ID', sort: true}
+                ,{field: 'name', title: '名字'}
+                ,{field: 'sex', title: '性别',templet:"#sex"}
+                ,{field: 'tel', title: '电话'}
+                ,{field: 'data', title: '时间'}
+                ,{field: 'note', title: '备注'}
+            ]]
+        });
+    });
+
+</script>

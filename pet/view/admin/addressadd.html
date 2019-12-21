@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .layui-btn{
+            width: 100px;
+        }
+        .layui-form{
+            margin-top: 50px;
+            margin-left: 50px;
+            padding-right: 50px;
+        }
+        #imgurl{
+            width: 200px;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="store" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="addr" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店电话</label>
+        <div class="layui-input-block">
+            <input type="number" name="tel" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店周内开门时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="time1" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店周末开门时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="time2" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="number" name="asort" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['form','jquery','upload','layer'],function () {
+        var form=layui.form;
+        var $=layui.jquery;
+        var layer=layui.layer;
+
+        form.on("submit(formDemo)",function (data) {
+            console.log(data.field);
+            $.ajax({
+                type:"post",
+                url:"addressadd.php",
+                data:data.field,
+                dataType:"json",
+                success:function (res) {
+                    if(res.code==200){
+                        layer.open({
+                            title: '宠生活宠物店'
+                            ,content: res.msg
+                        });
+                    }else{
+                        layer.msg(res.msg)
+                    }
+                }
+            })
+
+            return false;
+        })
+    })
+
+</script>

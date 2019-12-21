@@ -1,0 +1,58 @@
+<?php
+$category=$mysqli->query("select * from category")->fetch_all(MYSQLI_ASSOC);
+$goods=$mysqli->query("select gid,gname,gthumb from goods")->fetch_all(MYSQLI_ASSOC);
+
+
+$cate=[['cid'=>0,'cname'=>'全部','csort'=>'9999']];
+$cate=array_merge($cate,$category);
+$count=count($cate);
+for($i=0;$i<$count;$i++){
+	$cid=$cate[$i]['cid'];
+	if($cid==0){
+		$cate[$i]['good']=$goods;
+		continue;
+	}
+	$goods1=$mysqli->query("select gid,gname,gthumb from goods where cid=$cid")->fetch_all(MYSQLI_ASSOC);
+	$cate[$i]['good']=$goods1;
+
+}
+?>
+<link rel="stylesheet" type="text/css" href="../static/index/css/Products.css"/>
+		<!-- 图片 -->
+		<div class="tupian">
+			<img src="../pet/top.jpg" />
+		</div>
+		
+		
+		<!-- 标题1 -->
+		<div class="biaoti1">
+			<span class="us1">产品中心</span>
+			<span class="us2">Products</span>
+		</div>
+		
+		
+		<div class="chanpin">
+			<ul class="chanpin_top">
+				<?php foreach($cate as $v){ ?>
+					<li><?php echo $v['cname'] ?></li>
+				<?php } ?>
+			</ul>
+			<div class="chanpin_bottom1">
+				<?php foreach($cate as $v){ ?>
+					<ul class="chanpin_bottom">
+						<?php foreach($v['good'] as $q){ ?>
+							<a href="Products_neirong.php?gid=<?php echo $q['gid'] ?>">
+								<li>
+									<div class="chanpin_bottom_img">
+										<img src="..<?php echo $q['gthumb'] ?>" />
+									</div>
+									<p><?php echo $q['gname'] ?></p>
+								</li>
+							</a>
+						<?php } ?>
+					</ul>
+				<?php } ?>
+				</div>
+		</div>
+<script src="../static/index/JS/Products.js" type="text/javascript" charset="utf-8"></script>
+

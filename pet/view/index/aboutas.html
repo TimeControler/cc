@@ -1,0 +1,48 @@
+<?php
+require "../lib/connect.php";
+$aboutus=$mysqli->query("select * from aboutus")->fetch_assoc();
+$team=$mysqli->query("select * from team order by position desc limit 4")->fetch_all(MYSQLI_ASSOC);
+?>
+<link rel="stylesheet" type="text/css" href="../static/index/css/aboutas.css"/>
+		<!-- 图片 -->
+		<div class="tupian">
+			<img src="../pet/top.jpg" />
+		</div>
+		
+		<!-- 标题1 -->
+		<div class="biaoti1">
+			<span class="us1">关于我们</span>
+			<span class="us2">About Us</span>
+		</div>
+		
+		
+		<!-- 内容 -->
+		<ul class="neirong">
+			<li class="neirong_z">
+				<?php echo $aboutus['content'] ?>
+			</li>
+			<li class="neirong_y">
+				<img src="../pet/shop.jpg" />
+			</li>
+		</ul>
+		
+		
+		<!-- 标题2 -->
+		<div class="biaoti1">
+			<span class="us1">公司员工</span>
+			<span class="us2">Master Team</span>
+		</div>
+		
+		<!-- 维修工人 -->
+		<ul class="shifu">
+			<?php foreach($team as $v){ ?>
+				<li>
+					<div class="shifu_img">
+						<img src="..<?php echo $v['head_img'] ?>" />
+					</div>
+					<h2><?php echo $v['tname'] ?></h2>
+					<p><?php echo $v['position'] ?></p>
+				</li>
+			<?php } ?>
+		</ul>
+

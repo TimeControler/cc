@@ -1,0 +1,103 @@
+@import url("public.css");
+
+
+.title{
+	width: 1024px;
+	height: 42px;
+	font-size: 32px;
+	color: #000000;
+	margin: 70px auto 0;
+	text-align: center;
+	font-weight: 500;
+}
+
+.title_time{
+	width: 1024px;
+	height: 21px;
+	font-size: 14px;
+	color: #878787;
+	font-weight: 500;
+	margin: 20px auto 0;
+	text-align: center;
+}
+.title_neirong{
+	width: 1024px;
+	height: auto;
+	margin: 40px auto 0;
+}
+.title_neirong li{
+	width: auto;
+	height: auto;
+	text-indent: 2em;
+	font-size: 14px;
+	color: #3E3E3E;
+	padding: 5px;
+}
+.title_neirong li:nth-child(2n){
+	height: 24px;
+}
+
+.fenye{
+	width: 1024px;
+	height: auto;
+	font-size: 14px;
+	color: #F0443A;
+	margin: 50px auto 0;
+	overflow: auto;
+}
+
+.shang{
+	float: left;
+}
+.shang span{
+	margin-right: 10px;
+}
+.shang:hover{
+	color: #000000;
+	cursor: pointer;
+}
+.xia{
+	float: right;
+}
+.xia span{
+	margin-right: 10px;
+}
+.xia:hover{
+	color: #000000;
+	cursor: pointer;
+}
+
+
+.fanhui{
+	width: 98px;
+	height: 49px;
+	color: #2a2a2a;
+	font-size: 14px;
+	text-align: center;
+	line-height: 49px;
+	border: #2A2A2A 2px solid;
+	background: #FFFFFF;
+	margin: 80px auto 80px;
+}
+.fanhui a{
+	color: #2A2A2A;
+}
+.fanhui:hover{
+	background: #2A2A2A;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+
+.fanhui:hover a{
+	color: #FFFFFF;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+
+

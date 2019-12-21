@@ -1,0 +1,53 @@
+
+		<link rel="stylesheet" type="text/css" href="../static/index/css/Products_neirong.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/index/css/swiper.min.css" />
+		
+		<div class="tupian">
+			<img src="../static/index/img/20.jpg" >
+		</div>
+		
+		<h1 class="shangpinming"><?php echo $details['gname'] ?></h1>
+		
+		<div class="neirong">
+			<div class="neirong_z">
+                    <div class="swiper-container neirong_z_img">
+                        <div class="swiper-wrapper">
+                            <?php foreach($gbanner as $a){ ?>
+                            <div class="swiper-slide neirong_z_img"><img src="..<?php echo $a ?>" ></div>
+                            <?php } ?>
+                        </div>
+                        <!-- 如果需要导航按钮 -->
+                        <div class="swiper-button-prev zuo"></div>
+                        <div class="swiper-button-next you"></div>
+
+				</div>
+			</div>
+			<ul class="neirong_y">
+				<li>市场价：￥<?php echo $details['market_price'] ?></li>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+				<li>零售价：<i>￥<?php echo $details['shop_price'] ?></i></li>
+				<li>&nbsp;</li>
+				<li>&nbsp;<hr ></li>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+				<li>库存状况：<?php echo $details['stock'] ?></li>
+			</ul>
+			<div class="neirong_x">
+				<p>商品介绍</p>
+				<div><?php echo $details['content']?></div>
+			</div>
+		</div>
+        <script src="../static/index/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../static/index/js/animate.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var swiper = new Swiper('.swiper-container', {
+                pagination: '.swiper-pagination',
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                loop:true,
+                paginationClickable: true,
+                autoplay: 2500,
+                autoplayDisableOnInteraction: false
+            });
+        </script>

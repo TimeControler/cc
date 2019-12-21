@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .box{
+            width:100%;
+            height: auto;
+            margin: 30px auto 0;
+        }
+        h1{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .layui-btn-sm i{
+            font-size: 24px !important;
+        }
+        #Form{
+            margin-top: 30px;
+            padding-right: 30px;
+            display: none;
+            height: auto;
+        }
+        #imgurl{
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="" id="Form">
+    <input type="hidden" name="aid" >
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店名称</label>
+        <div class="layui-input-block">
+            <input type="text" value="" name="store" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="addr" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店电话</label>
+        <div class="layui-input-block">
+            <input type="number" name="tel" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店周内开门时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="time1" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店周末开门时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="time2" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="number" name="asort" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+        </div>
+    </div>
+</form>
+
+<div class="box">
+    <table id="demo" lay-filter="test"></table>
+    <script type="text/html" id="box">
+        <button type="button" id="btn1" class="layui-btn layui-btn-sm" onclick="edits({{d.aid}})">
+            <i style="font-size: 20px;" class="layui-icon layui-icon-edit"></i>
+        </button>
+        <button type="button" id="btn2" class="layui-btn layui-btn-sm layui-btn-danger" onclick="del({{d.aid}})">
+            <i class="layui-icon layui-icon-delete"></i>
+        </button>
+    </script>
+</div>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    var layer,$,table;
+    var index,index1;
+    layui.use(['table','jquery','layer','form'], function(){
+        table = layui.table;
+        $=layui.jquery;
+        layer=layui.layer;
+        var form=layui.form;
+
+        // 给表格获取数据
+        table.render({
+            elem: '#demo'
+            ,url: 'address.php?type=querys' //数据接口
+            ,page: true //开启分页
+            ,limit:5
+            ,limits:[5,10,20,25,30]
+            ,cols: [[ //表头
+                {field: 'aid', title: 'ID', sort: true}
+                ,{field: 'store', title: '分店名字'}
+                ,{field: 'addr', title: '分店地址'}
+                ,{field: 'tel', title: '分店电话'}
+                ,{field: 'time1', title: '分店周内开门时间'}
+                ,{field: 'time2', title: '分店周末开门时间'}
+                ,{field: 'asort', title: '排序'}
+                ,{field: '', title: '操作',templet:"#box"}
+            ]]
+        });
+
+        form.on('submit(formDemo)',function (data) {
+            $.post('address.php?type=updates',data.field,function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.close(index);
+                    layer.msg(data.msg);
+                    table.reload('demo');
+                }else{
+                    layer.msg(data.msg)
+                }
+            })
+            return false;
+        })
+
+
+    });
+
+    function del(aid) {
+        index1=layer.confirm('您确定要删除么？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.get('address.php?type=deletes',{aid:aid},function (res) {
+                let data=JSON.parse(res)
+                if(data.code==200){
+                    layer.close(index1)
+                    table.reload('demo');
+                    layer.msg("删除成功",{icon:1});
+                }else{
+                    layer.msg(data.msg);
+                }
+            })
+        }, function(){
+            layer.close(index1);
+            // layer.msg("删除失败",{icon:2});
+        });
+
+    }
+
+
+
+
+    // 给页面加弹出层
+    function edits(aid) {
+        index=layer.open({
+            type: 1,
+            title:"修改",
+            skin: 'layui-layer-rim', //加上边框
+            area: ['420px', 'auto'], //宽高
+            content: $("#Form")
+        })
+
+        $.get('address.php?type=querysone',{aid:aid},function (res) {
+            let data=JSON.parse(res);
+            if(data.code==200){
+                $("input[name='store']").val(data.data.store);
+                $("input[name='aid']").val(data.data.aid);
+                $("input[name='addr']").val(data.data.addr);
+                $("input[name='tel']").val(data.data.tel);
+                $("input[name='time1']").val(data.data.time1);
+                $("input[name='time2']").val(data.data.time2);
+                $("input[name='asort']").val(data.data.asort);
+            }else{
+                layer.msg(data.msg);
+            }
+        })
+    }
+</script>

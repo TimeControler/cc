@@ -1,0 +1,152 @@
+<?php
+$news=$mysqli->query("select nid,ntitle,update_time from news order by nid desc limit 5")->fetch_all(MYSQLI_ASSOC);
+
+$service=$mysqli->query("select * from service order by sid desc limit 4")->fetch_all(MYSQLI_ASSOC);
+
+$banner=$mysqli->query("select * from banner order by bsort desc limit 2")->fetch_all(MYSQLI_ASSOC);
+?>
+<link rel="stylesheet" type="text/css" href="../static/index/css/index.css" />
+<link rel="stylesheet" type="text/css" href="../static/index/css/swiper.min.css" />
+
+
+<!-- 轮播图 -->
+		<!-- <div class="lunbotu">
+			<div class="lunbotu_tupian">
+				<img src="../static/index/img/banner1.jpg" >
+				<img src="../static/index/img/banner2.jpg" >
+			</div>
+			<div class="zuo_kuai"></div>
+			<div class="you_kuai"></div>
+			<ul class="lunbodian">
+				<li class="xuanzhong"></li>
+				<li></li>
+			</ul>
+		</div> -->
+		<div class="swiper-container lunbotu">
+			<div class="swiper-wrapper">
+				<?php foreach($banner as $a){ ?>
+					<div class="swiper-slide lunbotu"><img src="..<?php echo $a['bthumb']?>" ></div>
+				<?php } ?>
+			</div>
+			<!-- 如果需要分页器 -->
+			<div class="swiper-pagination"></div>
+
+			<!-- 如果需要导航按钮 -->
+			<div class="swiper-button-prev zuo"></div>
+			<div class="swiper-button-next you"></div>
+		</div>
+
+
+
+
+		<!-- 标题1 -->
+		<p class="biaoti">我们的努力，只是为了您的满意</p>
+		<span class="zhushi">我们为您提供集宠物售卖、宠物美容、宠物生活用品、宠物健康于一体的大型“一站式宠物服务”</span>
+
+
+		<!-- 标题1下面的内容 -->
+		<div class="biaoti1_neirong">
+			<?php foreach($service as $q){ ?>
+				<!-- 主体1 -->
+				<div class="biaoti1_neirong_zt">
+					<div class="biaoti1_neirong_zt_img1">
+						<img src="..<?php echo $q['sthumb']?>" />
+					</div>
+					<div class="biaoti1_neirong_zt_wenzi1">
+						<?php echo $q['sname']?>
+					</div>
+					<div class="biaoti1_neirong_zt_img2">
+						<img src="../static/index/img/5.png">
+					</div>
+					<div class="biaoti1_neirong_zt_wenzi2">
+						<?php echo $q['content']?>
+					</div>
+				</div>
+			<?php } ?>
+
+		</div>
+
+
+		<p class="biaoti">你给我们信任,我们给它关爱</p>
+		<div class="biaoti1_img">
+			<img src="../static/index/img/6.png">
+		</div>
+
+		<!-- 主要内容 -->
+
+		<div class="neirong">
+			<div class="neirong_s">
+				<div class="neirong_s_img">
+					<img src="../pet/shop.jpg" />
+				</div>
+				<div class="neirong_s_z">
+					<div class="neirong_s_z_top">
+						<span class="neirong_s_z_top_left"><a href="navigator.php?page_id=24">公司简介</a></span>
+						<span class="neirong_s_z_top_right"><a href="navigator.php?page_id=24">MORE +</a></span>
+					</div>
+					<div class="neirong_s_z_bottom">
+						<?php echo $aboutus['content'] ?>
+					</div>
+				</div>
+			</div>
+			<div class="neirong_x">
+				<div class="neirong_x_img">
+					<img src="../pet/meirong.jpg" />
+				</div>
+				<div class="neirong_x_z">
+					<div class="neirong_x_y_top">
+						<span class="neirong_x_y_top_left"><a href="navigator.php?page_id=23">美容知识</a></span>
+						<span class="neirong_x_y_top_right"><a href="navigator.php?page_id=23">MORE +</a></span>
+					</div>
+					<ul class="neirong_x_list">
+						<?php foreach($news as $v){ ?>
+							<li>
+								<div class="neirong_x_list_z">
+									<a href="news.php?nid=<?php echo $v['nid'] ?>"><?php echo $v['ntitle'] ?></a>
+								</div>
+								<div class="neirong_x_list_y">
+									<?php echo $v['update_time'] ?>
+								</div>
+							</li>
+						<?php } ?>
+					</ul>
+				</div>
+			</div>
+		</div>
+<script src="../static/index/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/index/js/animate.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="../static/index/js/index.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="../static/index/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/index/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+var swiper = new Swiper('.swiper-container', {
+	pagination: '.swiper-pagination',
+	nextButton: '.swiper-button-next',
+	prevButton: '.swiper-button-prev',
+	loop:true,
+	paginationClickable: true,
+	autoplay: 2500,
+	autoplayDisableOnInteraction: false
+});
+window.onscroll=function () {
+    var t=document.documentElement.scrollTop||document.body.scrollTop;
+    console.log(t);
+    //动画
+    var neirong=document.querySelectorAll(".biaoti1_neirong_zt");
+    for(var i=0;i<4;i++){
+        if(t>400){
+            neirong[i].style.transition = "all 1s";
+            neirong[i].style.transitionDelay = i / 4 + "s";
+            neirong[i].style.transform = "translateY(-285px)";
+        }
+    }
+
+    var tupian1=document.getElementsByClassName("neirong_s_img")[0];
+    var tupian2=document.getElementsByClassName("neirong_x_img")[0];
+    if(t>1000){
+        tupian1.style.animation="donghua2 .5s";
+        tupian2.style.animation="donghua2 .5s";
+        tupian2.style.animationDelay=".3s";
+    }
+}
+</script>

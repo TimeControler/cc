@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>汽车维修美容 | 维修服务、保养服务、钣金喷漆、AMG改装、加装服务、高档美容</title>
+    <link rel="shortcut icon" href="../static/index/img/ico1.png" />
+    <script src="../static/index/JS/public.js"></script>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<div id="top1">
+    <div class="top_neikuan1">
+        <div class="top_neikuan_z1">
+            <div class="top_neikuan_z_left1">
+                <img src="../pet/logo.jpg" >
+            </div>
+            <div class="top_neikuan_z_right1">
+                <ul class="top_neikuan_z_right_list1">
+                    <li>
+                        <?php if(!isset($_GET['page_id'])){ ?>
+                            <a class="yangshi" href="index.php">首页</a>
+                        <?php }else{ ?>
+                            <a href="index.php">首页</a>
+                        <?php } ?>
+                    </li>
+                    <?php foreach($sel as $a){ ?>
+                        <?php if(isset($_GET['page_id']) && $_GET['page_id']==$a['nid'] ){ ?>
+                            <li><a class="yangshi" href="navigator.php?page_id=<?php echo $a['nid'] ?>"><?php echo $a['name'] ?></a></li>
+                        <?php }else{ ?>
+                            <li><a href="navigator.php?page_id=<?php echo $a['nid'] ?>"><?php echo $a['name'] ?></a></li>
+                        <?php } ?>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 返回顶部 -->
+<div class="dingbu"></div>
+
+
+<div id="top">
+    <div class="top_neikuan">
+        <div class="top_neikuan_z">
+            <div class="top_neikuan_z_left">
+                <img src="../pet/logo.jpg">
+            </div>
+            <div class="top_neikuan_z_right">
+                <ul class="top_neikuan_z_right_list">
+                    <li>
+                        <?php if(!isset($_GET['page_id'])){ ?>
+                            <a class="yangshi" href="index.php">首页</a>
+                        <?php }else{ ?>
+                            <a href="index.php">首页</a>
+                        <?php } ?>
+                    </li>
+                    <?php if(isset($_GET['page_id'])){ ?>
+                        <?php foreach($sel as $a){ ?>
+                            <?php if($_GET['page_id']==$a['nid']){ ?>
+                                <li><a class="yangshi" href="navigator.php?page_id=<?php echo $a['nid'] ?>"><?php echo $a['name'] ?></a></li>
+                            <?php }else{ ?>
+                                <li><a href="navigator.php?page_id=<?php echo $a['nid'] ?>"><?php echo $a['name'] ?></a></li>
+                            <?php } ?>
+                        <?php } ?>
+                    <?php }else{ ?>
+                        <?php foreach($sel as $a){ ?>
+                            <li><a href="navigator.php?page_id=<?php echo $a['nid'] ?>"><?php echo $a['name'] ?></a></li>
+                        <?php } ?>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,82 @@
+@import url("public.css");
+
+
+
+
+.chanpin{
+	width: 1024px;
+	height: auto;
+	overflow: hidden;
+	margin: 0 auto;
+	margin-top: 25px;
+	position: relative;
+}
+.chanpin:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+.chanpin_top{
+	width: 100%;
+	height: 30px;
+}
+.chanpin_top li{
+	float: left;
+	margin-right: 10px;
+	color: #F0443A;
+}
+.chanpin_top_xz{
+	border-bottom: 1px #F0443A dashed;
+}
+.chanpin_top li:hover{
+	border-bottom: 1px #F0443A dashed;
+	cursor: pointer;
+}
+.chanpin_bottom1{
+	width: 1024px;
+	height: auto;
+	position: relative;
+}
+.chanpin_bottom1:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+.chanpin_bottom{
+	width: 1024px;
+	height: auto;
+	overflow: hidden;
+	display: none;
+	/* border: 2px #000000 solid; */
+}
+.chanpin_bottom li{
+	padding: 8px;
+	height: 260px;
+	float: left;
+	margin-right: 20px;
+}
+.chanpin_bottom li p{
+	text-align: center;
+	margin-top: 10px;
+	font-size: 15px;
+	color: #373a41;
+	font-weight: 600;
+}
+.chanpin_bottom_img{
+	width: 214px;
+	height: 214px;
+	border: 1px solid rgb(204,204,204);
+}
+.chanpin_bottom_img img{
+	width: 100%;
+	height: 100%;
+}
+.chanpin_bottom li:hover p{
+	color: #F0443A;
+	cursor: pointer;
+}
+.chanpin_bottom li:hover{
+	cursor: pointer;
+}
+
+

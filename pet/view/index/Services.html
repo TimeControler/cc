@@ -1,0 +1,37 @@
+<?php
+$service=$mysqli->query("select * from service order by sid desc limit 4")->fetch_all(MYSQLI_ASSOC);
+?>
+<link rel="stylesheet" type="text/css" href="../static/index/css/Services.css"/>
+		
+		<!-- 图片 -->
+		<div class="tupian">
+			<img src="../pet/top.jpg" >
+		</div>
+		
+		<!-- 标题1 -->
+		<div class="biaoti1">
+			<span class="us1">服务项目</span>
+			<span class="us2">Services</span>
+		</div>
+		
+		
+		<div class="biaoti1_neirong">
+			<?php foreach($service as $q){ ?>
+			<!-- 主体1 -->
+			<div class="biaoti1_neirong_zt donghua1">
+				<div class="biaoti1_neirong_zt_img1">
+					<img src="..<?php echo $q['sthumb']?>" />
+				</div>
+				<div class="biaoti1_neirong_zt_wenzi1">
+					<?php echo $q['sname']?>
+				</div>
+				<div class="biaoti1_neirong_zt_img2">
+					<img src="../static/index/img/5.png">
+				</div>
+				<div class="biaoti1_neirong_zt_wenzi2">
+					<?php echo $q['content']?>
+				</div>
+			</div>
+			<?php } ?>
+		</div>
+		<script src="../static/index/js/Services.js" type="text/javascript" charset="utf-8"></script>

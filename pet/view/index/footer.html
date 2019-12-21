@@ -1,0 +1,33 @@
+
+<!-- 站点 -->
+<footer class="end-bar">
+    <div class="end-bar-footer">
+        <?php foreach($addr as $v){ ?>
+            <ul class="end-left-bar">
+            <li><strong><?php echo $v['store'] ?></strong></li>
+            <li>&nbsp;</li>
+            <li>门店地址：<?php echo $v['addr'] ?> </li>
+            <li><span>预约电话：</span><strong><?php echo $v['tel'] ?> </strong></li>
+            <li>&nbsp;</li>
+            <li class="end-bar-white">营业时间：</li>
+            <li>周一~周五：<?php echo $v['time1'] ?></li>
+            <li>周六~周天：<?php echo $v['time2'] ?></li>
+        </ul>
+        <?php } ?>
+        <div class="end-bar-final">
+            <div class="end-final-img">
+                <span class="end-bar-icon icon1"></span>
+                <span class="end-bar-icon icon2"></span>
+                <span class="end-bar-icon icon3"></span>
+                <span class="end-bar-icon icon4"></span>
+                <span class="end-bar-icon icon5"></span>
+            </div>
+            <div class="end-final-power">
+                版权所有 2019-2020 汽车美容工作室 技术支持：起飞页
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

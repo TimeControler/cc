@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .layui-btn{
+            width: 100px;
+        }
+        .layui-form{
+            margin-top: 50px;
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">导航名:</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required  lay-verify="required" placeholder="请输入导航名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">导航模块:</label>
+        <div class="layui-input-block">
+            <input type="text" name="tmp" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">导航排序:</label>
+        <div class="layui-input-block">
+            <input type="number" name="nsort" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品缩略图</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="hidden" name="nthumb" value="">
+                <button type="button" class="layui-btn" id="test2">图片上传</button>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <img id="imgurl" src="" alt="">
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    //Demo
+    layui.use(['form','jquery','layer','upload'], function(){
+        var form = layui.form;
+        var $=layui.jquery;
+        var layer=layui.layer;
+        var upload=layui.upload;
+        // 导航图片
+        upload.render({
+            elem: '#test2'
+            ,url: 'upload.php'
+            ,size:500
+            ,done: function(res){
+                if(res.code==200){
+                    layer.msg(res.msg,{icon:1});
+                    $('input[name="nthumb"]').val(res.data);
+                    $("#imgurl").attr('src','../'+res.data);
+                }else{
+                    layer.msg(res.msg,{icon:2});
+                }
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            // layer.msg(JSON.stringify(data.field));
+            $.ajax({
+               type:"post",
+               url:"navinsert.php",
+               data:data.field,
+               dataType:"json",
+               success:function (res) {
+                    if(res.code==200){
+                        layer.open({
+                            title: '海贼王周边商城'
+                            ,content: res.msg
+                        });
+                    }else{
+                        layer.msg(res.msg)
+                    }
+               }
+            });
+
+            return false;
+        });
+    });
+</script>
